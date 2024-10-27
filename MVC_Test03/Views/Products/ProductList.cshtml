@@ -6,6 +6,43 @@
     ViewBag.Title = "ProductList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .pagination {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+            .pagination .page-item .page-link {
+                display: inline-block;
+                padding: 8px 16px;
+                font-size: 14px;
+                color: #007bff;
+                text-decoration: none;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .pagination .page-item .page-link:hover {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                }
+
+            .pagination .page-item.active .page-link {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+                cursor: default;
+            }
+</style>
 
 <div class="container">
     <h2>MUA HÀNG</h2>
@@ -51,5 +88,17 @@
 <!-- Thêm đoạn mã để hiển thị số trang và số trang hiện tại -->
 Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 <!--Control PagedListPager: mô tả mô hình với số trang là liên kết với tham số "Index" và tham số page-->
-@Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }))
+@Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions
+{
+    UlElementClasses = new[] { "pagination" },
+   LiElementClasses = new[] { "page-item" },
+    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    Display = PagedListDisplayMode.IfNeeded,
+    LinkToIndividualPageFormat = "Trang {0}",
+    LinkToPreviousPageFormat = "Trước",
+    LinkToNextPageFormat = "Tiếp"
+})
 <!-- Kết thúc -->
