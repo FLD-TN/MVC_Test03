@@ -129,12 +129,12 @@ namespace MVC_Test03.Controllers
             // Tìm kiếm chuỗi truy vấn theo category
             if (category == null)
             {
-                products = db.Products.OrderByDescending(x => x.NamePro);
+                products = db.Products.OrderByDescending(x => x.Price);
             }
             else
-            //{
-            //    products = db.Products.OrderByDescending(x => x.CateID).Where(x => x.CateID == category);
-            //}
+            {
+                products = db.Products.OrderByDescending(x => x.ProductID).Where(x => x.ProductID == category);
+            }
 
 
             //Tìm kiếm chuỗi truy vấn theo NamePro, nếu chuỗi truy vấn SearchString khác rỗng, null
@@ -145,11 +145,12 @@ namespace MVC_Test03.Controllers
             // Tìm kiếm chuỗi truy vấn theo đơn giá
             if (min >= 0 && max > 0)
             {
-                products = db.Products.OrderByDescending(x => x.Price).Where(p => (double)p.Price >= min && (double)p.Price <= max);
+                products = products.Where(p => (double)p.Price >= min && (double)p.Price <= max);
             }
 
+
             // Khai báo mỗi trang 4 sản phẩm
-            int pageSize = 4;
+            int pageSize = 8;
             // Toán tử ?? trong C# mô tả nếu page khác null thì lấy giá trị page, còn
             // nếu page = null thì lấy giá trị 1 cho biến pageNumber.
             int pageNumber = (page ?? 1);
