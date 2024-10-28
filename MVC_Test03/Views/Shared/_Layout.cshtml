@@ -22,6 +22,12 @@
                     <li>@Html.ActionLink("Khách Hàng", "Index", "Customers", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Đơn Hàng", "Index", "OrderProes", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.Action("BagCart", "ShoppingCart")
+                    </li>
+                </ul>
+
             </div>
         </div>
     </nav>

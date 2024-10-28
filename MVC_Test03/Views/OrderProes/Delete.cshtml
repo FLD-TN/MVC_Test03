@@ -1,47 +1,50 @@
-﻿@model IEnumerable<MVC_Test03.Models.OrderPro>
+﻿@model MVC_Test03.Models.OrderPro
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Delete</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OrderPro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
             @Html.DisplayNameFor(model => model.DateOrder)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOrder)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.AddressDeliverry)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressDeliverry)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Customer.NameCus)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-    @foreach (var item in Model)
+        <dd>
+            @Html.DisplayFor(model => model.Customer.NameCus)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOrder)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressDeliverry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.NameCus)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
-    }
+        @Html.AntiForgeryToken()
 
-</table>
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

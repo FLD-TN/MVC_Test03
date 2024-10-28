@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/Signin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/Content/css/signin.css/signin.css" />
+</head>
+<body>
+    <div class="container" style="overflow:hidden">
+        <!-- Cột bên trái: Hình ảnh ghế -->
+        <div class="left-page-container">
+            <p class="text-left-page">3legant.</p>
+            <img class="sofa-img-login" src="~/Content/images/sofaLogin.png"
+                 alt="sofa">
+        </div>
+
+        <!-- Cột bên phải: Form đăng ký -->
+        <div class="sign-up">
+            <div class="header">
+                <h1>Sign In</h1>
+                <p>
+                    Don't have an account yet? <a href="Signup.html">
+                        Sign
+                        up
+                    </a>
+                </p>
+            </div>
+
+            <div class="content">
+                <input type="text"
+                       placeholder="Your username or email address"><br>
+
+                <div class="password">
+                    <input type="text" placeholder="Password"
+                           class="password">
+                    <i class="fa fa-eye"></i>
+                </div>
+                <br>
+                <input type="checkbox"> Remember me
+
+                <span class="forgot-password">
+                    <a href="#">
+                        Forgot
+                        password?
+                    </a>
+                </span>
+
+                <a href="@Url.Action("ProductList","Products")">
+                    <button class="btn-signin">
+                        Sign In
+                    </button>
+
+                    @*<input type="submit" value="Thanh toán" class="btn btn-success" />
+                    <a href="@Url.Action("Create", "Customers")" class="btn btn-success">Đăng ký</a>*@
+
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

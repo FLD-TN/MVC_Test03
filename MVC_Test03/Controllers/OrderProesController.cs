@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC_Test03.Models;
+using PagedList;
 
 namespace MVC_Test03.Controllers
 {
@@ -15,6 +16,7 @@ namespace MVC_Test03.Controllers
         private DBSportStoreEntities db = new DBSportStoreEntities();
 
         // GET: OrderProes
+            [ActionName("IndexWithoutPagination")]
         public ActionResult Index()
         {
             var orderProes = db.OrderProes.Include(o => o.Customer);
@@ -114,12 +116,41 @@ namespace MVC_Test03.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            OrderPro orderPro = db.OrderProes.Find(id);
-            db.OrderProes.Remove(orderPro);
-            db.SaveChanges();
+            //OrderPro orderPro = db.OrderProes.Find(id);
+            //if (orderPro != null)
+            //{
+            //    db.OrderProes.Remove(orderPro);
+            //    db.SaveChanges();
+            //    TempData["Message"] = "Đơn hàng đã được xóa thành công!";
+            //}
+            //return RedirectToAction("Index");
+            OrderPro orderPro = db.OrderProes.Include("OrderDetails").FirstOrDefault(o => o.ID == id);
+            if (orderPro != null)
+            {
+                // Xóa các chi tiết đơn hàng liên quan
+                foreach (var detail in orderPro.OrderDetails.ToList())
+                {
+                    db.OrderDetails.Remove(detail);
+                }
+
+                // Xóa đơn hàng
+                db.OrderProes.Remove(orderPro);
+                db.SaveChanges();
+                TempData["Message"] = "Đơn hàng đã được xóa thành công!";
+            }
             return RedirectToAction("Index");
         }
 
+        public ActionResult Index(int? page)
+        {
+            int pageSize = 10; // Số mục hiển thị trên mỗi trang
+            int pageNumber = page ?? 1; // Trang hiện tại, mặc định là 1 nếu chưa có trang nào được chọn
+
+            // Lấy danh sách OrderPro sắp xếp theo ngày đặt hàng
+            var orders = db.OrderProes.OrderBy(o => o.DateOrder).ToPagedList(pageNumber, pageSize);
+
+            return View(orders);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
